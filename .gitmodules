@@ -1,0 +1,3 @@
+[submodule "depend"]
+	path = depend
+	url = https://github.com/vector-js/vector.git
