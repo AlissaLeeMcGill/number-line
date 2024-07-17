@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Examples</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  </head>
+  <body>
+
+    <style>
+    body {
+      margin: 16px;
+    }
+    div {
+      margin-bottom:16px
+    }
+    </style>
+
+    <!-- STYLESHEET -->
+    <link rel="stylesheet" href="./dependencies/vector/css/library.css">
+
+    <!-- SVG -->
+    <div id="svg-line"></div><script type="module" src="./dependencies/vector/dist/examples/svg/svg-line.js"></script>
+
+    <!-- MATHS -->
+    <div id="angle"></div><script type="module" src="./dependencies/vector/dist/examples/math/angle.js"></script>
+    <div id="angle-between-two-vectors"></div><script type="module" src="./dependencies/vector/dist/examples/math/angle-between-two-vectors.js"></script>
+    <div id="area-between-two-vectors"></div><script type="module" src="./dependencies/vector/dist/examples/math/area-between-two-vectors.js"></script>
+    <div id="cartesian-coordinate-system"></div><script type="module" src="./dependencies/dist/examples/math/cartesian-coordinate-system.js"></script>
+    <div id="line-defined-by-two-points"></div><script type="module" src="./dependencies/vector/dist/examples/math/line-defined-by-two-points.js"></script>
+    <div id="point-where-two-lines-intersect"></div><script type="module" src="./dependencies/vector/dist/examples/math/point-where-two-lines-intersect.js"></script>
+  
+
+
+    <script type="module">
+      import { download } from './dependencies/vector/dist/util/file.js';
+
+      // add a save function to the window to save the current interactive
+      window.save = function() {
+        let interactives = document.getElementsByClassName('interactive');
+        for( let i = 0; i < interactives.length; i++ ) {
+          let name = interactives[i].parentElement.id;
+          let id = interactives[i].id;
+          download(id, `${name}.svg`);
+        }
+      }
+    </script>
+  </body>
+</html>
