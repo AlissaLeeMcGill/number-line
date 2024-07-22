@@ -7,43 +7,28 @@
   </head>
   <body>
 
-    <style>
-    body {
-      margin: 16px;
-    }
-    div {
-      margin-bottom:16px
-    }
-    </style>
+    <!-- SCRIPTS -->
+    <script type="module" src="/main.js" ></script> 
+    <script type="module" src="./depend/dist/examples/math/angle.js"></script>
+    <script type="module" src="./depend/dist/examples/math/angle-between-two-vectors.js"></script>
+    <script type="module" src="./depend/dist/examples/math/area-between-two-vectors.js"></script>
+    <script type="module" src="./depend/dist/examples/math/cartesian-coordinate-system.js"></script>
+    <script type="module" src="./depend/dist/examples/math/line-defined-by-two-points.js"></script>
+    <script type="module" src="./depend/dist/examples/math/point-where-two-lines-intersect.js"></script>
 
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="./depend/css/library.css">
+    <link rel="stylesheet" href="/main.cs" />
 
     <!-- SVG -->
-    <div id="svg-line"></div><script type="module" src="/svg-line.js"></script>
+    <div id="classNumberlineAttempt"></div>
 
-    <!-- MATHS -->
-    <div id="angle"></div><script type="module" src="./depend/dist/examples/math/angle.js"></script>
-    <div id="angle-between-two-vectors"></div><script type="module" src="./depend/dist/examples/math/angle-between-two-vectors.js"></script>
-    <div id="area-between-two-vectors"></div><script type="module" src="./depend/dist/examples/math/area-between-two-vectors.js"></script>
-    <div id="cartesian-coordinate-system"></div><script type="module" src="./depend/dist/examples/math/cartesian-coordinate-system.js"></script>
-    <div id="line-defined-by-two-points"></div><script type="module" src="./dependencies/dist/examples/math/line-defined-by-two-points.js"></script>
-    <div id="point-where-two-lines-intersect"></div><script type="module" src="./dependencies/dist/examples/math/point-where-two-lines-intersect.js"></script>
-  
-
-
-    <script type="module">
-      import { download } from './depend/dist/util/file.js';
-
-      // add a save function to the window to save the current interactive
-      window.save = function() {
-        let interactives = document.getElementsByClassName('interactive');
-        for( let i = 0; i < interactives.length; i++ ) {
-          let name = interactives[i].parentElement.id;
-          let id = interactives[i].id;
-          download(id, `${name}.svg`);
-        }
-      }
-    </script>
+    <!-- MATH DIVS -->
+    <div id="angle"></div>
+    <div id="angle-between-two-vectors"></div>
+    <div id="area-between-two-vectors"></div>
+    <div id="cartesian-coordinate-system"></div>
+    <div id="line-defined-by-two-points"></div>
+    <div id="point-where-two-lines-intersect"></div>
   </body>
 </html>
