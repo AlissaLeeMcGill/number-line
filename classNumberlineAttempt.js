@@ -16,6 +16,13 @@
 // fixation/  start point first 
 //colors when clicking and moving the numberline
 //control point stays snapped to the numberline
+// support fraction
+// support decimals 
+// target number and where to display on the screen
+// don't need intermediate numbers on the numberline (maybe set a bool)
+// function should return final position, time from start of trial to final response
+// time until they first grab the handle and then when they last let go of it.
+// control over the tick mark sizes on the numberline
 
 
 import { Interactive, getScriptName } from './index.js';
@@ -32,10 +39,12 @@ export class Numberline {
     start_label = 5; 
     end_label = 20;
     line_length = 0;
+    tick_mark_height = 20;
 
     //boolean
     number_Labels = true;
     boundless_line = true;
+
 
     //line
     line = interactive.line(0, 0, 0, 0);
@@ -84,12 +93,15 @@ export class Numberline {
  
         if (this.number_Labels) {
             for (let i = 0; i <= (this.end_label-this.start_label); i++){
-                let line_marker = interactive.line(this.line_start_X+(i* this.unit_size), this.line_start_Y +5,this.line_start_X+(i* this.unit_size), this.line_start_Y-5 );
+                let line_marker = interactive.line(this.line_start_X+(i* this.unit_size), this.line_start_Y +(this.tick_mark_height/2),this.line_start_X+(i* this.unit_size), this.line_start_Y-(this.tick_mark_height/2) );
                 let num_label = interactive.text(this.line_start_X + (i * this.unit_size), this.line_start_Y + 25,i+start_label);
                 num_label.style.textAnchor = 'middle';
                 num_label.alignmentBaseline = 'middle';
             }
         }
+    }
+    setTickMarkHeight(height){
+        this.tick_mark_height = height;
     }
 
     main(){
@@ -103,13 +115,28 @@ export class Numberline {
 
         setInteractiveSize(500,1000);
 
-        const numberline = new Numberline(200, 200,50, true, true, 100, 113);
+        const numberline = new Numberline(100, 100,30, true, false, 20, 40);
         numberline.line.classList.add('default');
         numberline.line.update = function () {
             this.x1 = numberline.line_start_X;
             this.y1 = numberline.line_start_Y; 
-            this.x2 = numberline.control_point.x;
             this.y2 = numberline.line_start_Y;
+            
+            if(this.boundless_line){
+                this.x2 = numberline.control_point.x;    
+            }else{
+                if(numberline.control_point.x < numberline.line_start_X){
+                    this.x2 = numberline.line_start_X;
+                }
+                else if(numberline.control_point.x > numberline.line_length+numberline.line_start_X){
+                    this.x2 = numberline.line_length+numberline.line_start_X;
+                    console.log(numberline.line_length);
+                }else{
+                    this.x2 = numberline.control_point.x; 
+                }
+
+
+            }
         };
 
         numberline.start_line.update = function () {
