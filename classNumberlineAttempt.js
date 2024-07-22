@@ -31,6 +31,11 @@ interactive.border = true;
 interactive.width = 1000;
 interactive.height = 500;
 
+const NumberLabels = Object.freeze({
+    NO_LABELS: 0,
+    START_AND_END: 1,
+    ALL_LABELS: 2,
+});
 export class Numberline { 
     //number
     line_start_X  = 150;
@@ -42,9 +47,8 @@ export class Numberline {
     tick_mark_height = 20;
 
     //boolean
-    number_Labels = true;
     boundless_line = true;
-
+    number_Labels = NumberLabels.ALL_LABELS;
 
     //line
     line = interactive.line(0, 0, 0, 0);
@@ -72,9 +76,9 @@ export class Numberline {
         this.control_point.x = this.line_start_X + this.line_length;
         this.control_point.y = this.line_start_Y;
 
-        if(this.number_Labels) {
-            this.setLabels(this.start_label, this.end_label);
-        } 
+     
+        this.setLabels(this.start_label, this.end_label);
+         
         
     }
 
@@ -91,7 +95,7 @@ export class Numberline {
         this.start_label = start_label;
         this.end_label = end_label;
  
-        if (this.number_Labels) {
+        if (this.number_Labels==NumberLabels.ALL_LABELS) {
             for (let i = 0; i <= (this.end_label-this.start_label); i++){
                 let line_marker = interactive.line(this.line_start_X+(i* this.unit_size), this.line_start_Y +(this.tick_mark_height/2),this.line_start_X+(i* this.unit_size), this.line_start_Y-(this.tick_mark_height/2) );
                 let num_label = interactive.text(this.line_start_X + (i * this.unit_size), this.line_start_Y + 25,i+start_label);
@@ -99,6 +103,21 @@ export class Numberline {
                 num_label.alignmentBaseline = 'middle';
             }
         }
+        else if(this.number_Labels==NumberLabels.START_AND_END){
+
+            let num_label_start = interactive.text(this.line_start_X , this.line_start_Y + 25,start_label);
+            num_label_start.style.textAnchor = 'middle';
+            num_label_start.alignmentBaseline = 'middle';
+            let num_label_end = interactive.text(this.line_start_X +this.line_length, this.line_start_Y + 25,end_label);
+            num_label_end.style.textAnchor = 'middle';
+            num_label_end.alignmentBaseline = 'middle';
+        }
+        else
+        {
+            //nothin, no labels
+        }
+        
+
     }
     setTickMarkHeight(height){
         this.tick_mark_height = height;
@@ -115,7 +134,7 @@ export class Numberline {
 
         setInteractiveSize(500,1000);
 
-        const numberline = new Numberline(100, 100,30, true, false, 20, 40);
+        const numberline = new Numberline(100, 100,30, NumberLabels.START_AND_END, false, 20, 40);
         numberline.line.classList.add('default');
         numberline.line.update = function () {
             this.x1 = numberline.line_start_X;
@@ -134,8 +153,6 @@ export class Numberline {
                 }else{
                     this.x2 = numberline.control_point.x; 
                 }
-
-
             }
         };
 
