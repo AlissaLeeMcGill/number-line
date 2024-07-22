@@ -116,22 +116,17 @@ export class Numberline {
         {
             //nothin, no labels
         }
-        
-
     }
     setTickMarkHeight(height){
         this.tick_mark_height = height;
     }
-
     main(){
         let text = interactive.text(25, interactive.height - 25, "");
-
         function setInteractiveSize(height, width)
         {
             interactive.width = width;
             interactive.height = height;
         }
-
         setInteractiveSize(500,1000);
 
         const numberline = new Numberline(100, 100,30, NumberLabels.START_AND_END, false, 20, 40);
@@ -140,7 +135,7 @@ export class Numberline {
             this.x1 = numberline.line_start_X;
             this.y1 = numberline.line_start_Y; 
             this.y2 = numberline.line_start_Y;
-            
+
             if(this.boundless_line){
                 this.x2 = numberline.control_point.x;    
             }else{
@@ -158,15 +153,15 @@ export class Numberline {
 
         numberline.start_line.update = function () {
             this.x1 = numberline.line_start_X;
-            this.y1 = numberline.line_start_Y - 5; 
+            this.y1 = numberline.line_start_Y - (numberline.tick_mark_height/2); 
             this.x2 = numberline.line_start_X; 
-            this.y2 = numberline.line_start_Y +5;
+            this.y2 = numberline.line_start_Y + (numberline.tick_mark_height/2); 
         };
         numberline.end_line.update = function () {
             this.x1 = numberline.control_point.x;
-            this.y1 = numberline.line_start_Y - 5; 
+            this.y1 = numberline.line_start_Y - (numberline.tick_mark_height/2); 
             this.x2 = numberline.control_point.x;
-            this.y2 = numberline.line_start_Y +5; 
+            this.y2 = numberline.line_start_Y + (numberline.tick_mark_height/2);
         };
 
         numberline.line.update();
