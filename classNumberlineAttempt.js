@@ -11,9 +11,11 @@
 // be able to set the start point for the box and /or make box just screen size? -DONE
 // be able to set the start spot for the line - DONE
 // be able to set the end point on the line - DONE
-// be able to have number labels on the line or not(bool)
-// being able to draw beyond they bound or not. ( bool)
+// be able to have number labels on the line or not(bool) -DONE
+// being able to draw beyond they bound or not. ( bool) - DONE
 // fixation/  start point first 
+//colors when clicking and moving the numberline
+//control point stays snapped to the numberline
 
 
 import { Interactive, getScriptName } from './index.js';
@@ -63,10 +65,7 @@ export class Numberline {
 
         if(this.number_Labels) {
             this.setLabels(this.start_label, this.end_label);
-        } else {
-           //TO DO - Make this actually clear out the numbers
-            //this.setLabels(this.start_label, this.end_label);
-        }
+        } 
         
     }
 
@@ -89,14 +88,6 @@ export class Numberline {
                 let num_label = interactive.text(this.line_start_X + (i * this.unit_size), this.line_start_Y + 25,i+start_label);
                 num_label.style.textAnchor = 'middle';
                 num_label.alignmentBaseline = 'middle';
-               // this.number_labels_array[i]=num_label;
-
-                
-               console.log(line_marker.x1, line_marker.x2, line_marker.y1, line_marker.y2);
-               console.log("num_label", num_label.contents)
-               console.log("i",i);
-
-
             }
         }
     }
@@ -112,7 +103,7 @@ export class Numberline {
 
         setInteractiveSize(500,1000);
 
-        const numberline = new Numberline(150, 150,30, true, true, 5, 20);
+        const numberline = new Numberline(200, 200,50, true, true, 100, 113);
         numberline.line.classList.add('default');
         numberline.line.update = function () {
             this.x1 = numberline.line_start_X;
@@ -140,8 +131,7 @@ export class Numberline {
 
         numberline.line.addDependency(numberline.control_point);
 
-        // TODO: this is rather hacky, and probably best replaced by implementing the
-        // tspan element in our SVG wrapper class.
+        // TODO: This was from the example app from vector.js. THey note it is "rather hacky"
         text.update = function () {
             let tag = `<tspan style="fill:purple">line</tspan>`;
             let x1 = `<tspan style="fill:#ab6f00">x1</tspan>`;
