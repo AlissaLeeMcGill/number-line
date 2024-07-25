@@ -22,7 +22,7 @@
 // don't need intermediate numbers on the numberline (maybe set a bool)
 // function should return final position, time from start of trial to final response
 // time until they first grab the handle and then when they last let go of it.
-// control over the tick mark sizes on the numberline
+// control over the tick mark sizes on the numberline - DONE
 
 
 import { Interactive, getScriptName } from './index.js';
@@ -36,6 +36,7 @@ const NumberLabels = Object.freeze({
     START_AND_END: 1,
     ALL_LABELS: 2,
 });
+
 export class Numberline { 
     //number
     line_start_X  = 150;
@@ -48,9 +49,12 @@ export class Numberline {
 
     //boolean
     boundless_line = true;
+
+    //enum
     number_Labels = NumberLabels.ALL_LABELS;
 
     //line
+    baseline = interactive.line(100, 100, 100, 100);
     line = interactive.line(0, 0, 0, 0);
     start_line = interactive.line(0,0,0,0);
     end_line = interactive.line(0,0,0,0);
@@ -71,15 +75,13 @@ export class Numberline {
         this.end_label = end_label1;
 
         this.line_length = (this.end_label - this.start_label) * this.unit_size;
-        console.log("line_length",this.line_length);
 
         this.control_point.x = this.line_start_X + this.line_length;
         this.control_point.y = this.line_start_Y;
 
-     
         this.setLabels(this.start_label, this.end_label);
-         
         
+        this.setCssClasses();
     }
 
     setLineStart(line_start_X, line_start_Y){
@@ -91,35 +93,44 @@ export class Numberline {
         this.unit_size = unit_size;
     }
 
+    setCssClasses(){
+        this.line.classList.add('default', 'clickable-line');
+        this.baseline.classList.add('base-line');
+    }
+
     setLabels(start_label, end_label){
         this.start_label = start_label;
         this.end_label = end_label;
  
         if (this.number_Labels==NumberLabels.ALL_LABELS) {
-            for (let i = 0; i <= (this.end_label-this.start_label); i++){
-                let line_marker = interactive.line(this.line_start_X+(i* this.unit_size), this.line_start_Y +(this.tick_mark_height/2),this.line_start_X+(i* this.unit_size), this.line_start_Y-(this.tick_mark_height/2) );
-                let num_label = interactive.text(this.line_start_X + (i * this.unit_size), this.line_start_Y + 25,i+start_label);
-                num_label.style.textAnchor = 'middle';
-                num_label.alignmentBaseline = 'middle';
-            }
-        }
-        else if(this.number_Labels==NumberLabels.START_AND_END){
-
-            let num_label_start = interactive.text(this.line_start_X , this.line_start_Y + 25,start_label);
-            num_label_start.style.textAnchor = 'middle';
-            num_label_start.alignmentBaseline = 'middle';
-            let num_label_end = interactive.text(this.line_start_X +this.line_length, this.line_start_Y + 25,end_label);
-            num_label_end.style.textAnchor = 'middle';
-            num_label_end.alignmentBaseline = 'middle';
-        }
-        else
-        {
-            //nothin, no labels
+            this.setAllLabels();
+        } else if(this.number_Labels==NumberLabels.START_AND_END){
+            this.setStartAndEndLabels();
         }
     }
+
+    setAllLabels() {
+        for (let i = 0; i <= (this.end_label-this.start_label); i++){
+            let line_marker = interactive.line(this.line_start_X+(i* this.unit_size), this.line_start_Y +(this.tick_mark_height/2),this.line_start_X+(i* this.unit_size), this.line_start_Y-(this.tick_mark_height/2) );
+            let num_label = interactive.text(this.line_start_X + (i * this.unit_size), this.line_start_Y + 25, i + this.start_label);
+            num_label.style.textAnchor = 'middle';
+            num_label.alignmentBaseline = 'middle';
+        }
+    }
+
+    setStartAndEndLabels() {
+        let num_label_start = interactive.text(this.line_start_X , this.line_start_Y + 25, this.start_label);
+            num_label_start.style.textAnchor = 'middle';
+            num_label_start.alignmentBaseline = 'middle';
+            let num_label_end = interactive.text(this.line_start_X +this.line_length, this.line_start_Y + 25, this.end_label);
+            num_label_end.style.textAnchor = 'middle';
+            num_label_end.alignmentBaseline = 'middle';
+    }
+
     setTickMarkHeight(height){
         this.tick_mark_height = height;
     }
+
     main(){
         let text = interactive.text(25, interactive.height - 25, "");
         function setInteractiveSize(height, width)
@@ -130,7 +141,8 @@ export class Numberline {
         setInteractiveSize(500,1000);
 
         const numberline = new Numberline(100, 100,30, NumberLabels.START_AND_END, false, 20, 40);
-        numberline.line.classList.add('default');
+        numberline.baseline.x2 = numberline.line_start_X + numberline.line_length;
+
         numberline.line.update = function () {
             this.x1 = numberline.line_start_X;
             this.y1 = numberline.line_start_Y; 
@@ -144,7 +156,6 @@ export class Numberline {
                 }
                 else if(numberline.control_point.x > numberline.line_length+numberline.line_start_X){
                     this.x2 = numberline.line_length+numberline.line_start_X;
-                    console.log(numberline.line_length);
                 }else{
                     this.x2 = numberline.control_point.x; 
                 }
@@ -157,6 +168,7 @@ export class Numberline {
             this.x2 = numberline.line_start_X; 
             this.y2 = numberline.line_start_Y + (numberline.tick_mark_height/2); 
         };
+
         numberline.end_line.update = function () {
             this.x1 = numberline.control_point.x;
             this.y1 = numberline.line_start_Y - (numberline.tick_mark_height/2); 
