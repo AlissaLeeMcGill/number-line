@@ -46,6 +46,9 @@ export class Numberline {
     end_label = 20;
     line_length = 0;
     tick_mark_height = 20;
+    target_number_value = 0;
+    target_number_x = 0;
+    target_number_y = 0;
 
     //boolean
     boundless_line = true;
@@ -58,6 +61,10 @@ export class Numberline {
     line = interactive.line(0, 0, 0, 0);
     start_line = interactive.line(0,0,0,0);
     end_line = interactive.line(0,0,0,0);
+
+    //text
+     target_number = interactive.text(0, 0, 0);
+    
 
     //array
     number_labels_array = [];
@@ -80,8 +87,27 @@ export class Numberline {
         this.control_point.y = this.line_start_Y;
 
         this.setLabels(this.start_label, this.end_label);
-        
+        this.generateTargetNumber();
+        this.setTargetNumberLocation(this.target_number_x, this.target_number_y);
         this.setCssClasses();
+    }
+
+    generateTargetNumber(){
+        this.target_number_value = Math.floor(Math.random() * this.end_label) + this.start_label;
+        this.target_number.contents = this.target_number_value;
+
+    }
+    setTargetNumber(targ){
+        this.target_number_value = targ;
+        this.target_number.contents = this.target_number_value;
+    }
+    setTargetNumberLocation(targ_num_x, targ_num_y){
+
+        this.target_number_x = targ_num_x;
+        this.target_number_y = targ_num_y;
+
+        this.target_number.x = this.target_number_x;
+        this.target_number.y =  this.target_number_y; 
     }
 
     setLineStart(line_start_X, line_start_Y){
@@ -142,6 +168,8 @@ export class Numberline {
 
         const numberline = new Numberline(100, 100,30, NumberLabels.START_AND_END, false, 20, 40);
         numberline.baseline.x2 = numberline.line_start_X + numberline.line_length;
+        numberline.setTargetNumber(33);
+        numberline.setTargetNumberLocation(50,50);
 
         numberline.line.update = function () {
             this.x1 = numberline.line_start_X;
