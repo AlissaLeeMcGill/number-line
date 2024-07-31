@@ -6,25 +6,6 @@
 * @tags [svg]
 */
 
-
-//Create a function that creates this line
-// be able to set the start point for the box and /or make box just screen size? -DONE
-// be able to set the start spot for the line - DONE
-// be able to set the end point on the line - DONE
-// be able to have number labels on the line or not(bool) -DONE
-// being able to draw beyond they bound or not. ( bool) - DONE
-// fixation/  start point first 
-//colors when clicking and moving the numberline
-//control point stays snapped to the numberline
-// support fraction
-// support decimals 
-// target number and where to display on the screen
-// don't need intermediate numbers on the numberline (maybe set a bool)
-// function should return final position, time from start of trial to final response
-// time until they first grab the handle and then when they last let go of it.
-// control over the tick mark sizes on the numberline - DONE
-
-
 import { Interactive, getScriptName } from './index.js';
 let interactive = new Interactive(getScriptName());
 interactive.border = true;
@@ -49,6 +30,7 @@ export class Numberline {
     target_number_value = 0;
     target_number_x = 0;
     target_number_y = 0;
+    numberline_value=0;
 
     //boolean
     boundless_line = true;
@@ -90,10 +72,11 @@ export class Numberline {
         this.generateTargetNumber();
         this.setTargetNumberLocation(this.target_number_x, this.target_number_y);
         this.setCssClasses();
+        
     }
 
     generateTargetNumber(){
-        this.target_number_value = Math.floor(Math.random() * this.end_label) + this.start_label;
+        this.target_number_value = Math.floor(Math.random() * (this.end_label- this.start_label+1)) + this.start_label;
         this.target_number.contents = this.target_number_value;
 
     }
@@ -157,6 +140,13 @@ export class Numberline {
         this.tick_mark_height = height;
     }
 
+    getCurrentNumberLineLocation(){
+        let value = this.line.x2 - this.line_start_X;
+        this.numberline_value = (value / this.unit_size)+ this.start_label ;
+        return this.numberline_value;
+  
+    }
+
     main(){
         let text = interactive.text(25, interactive.height - 25, "");
         function setInteractiveSize(height, width)
@@ -168,8 +158,10 @@ export class Numberline {
 
         const numberline = new Numberline(100, 100,30, NumberLabels.START_AND_END, false, 20, 40);
         numberline.baseline.x2 = numberline.line_start_X + numberline.line_length;
-        numberline.setTargetNumber(33);
+        //numberline.setTargetNumber(33);
+        numberline.generateTargetNumber();
         numberline.setTargetNumberLocation(50,50);
+        let relativeLocationText = interactive.text(150, 150, 0);
 
         numberline.line.update = function () {
             this.x1 = numberline.line_start_X;
@@ -188,6 +180,8 @@ export class Numberline {
                     this.x2 = numberline.control_point.x; 
                 }
             }
+
+            relativeLocationText.contents =numberline.getCurrentNumberLineLocation();
         };
 
         numberline.start_line.update = function () {
