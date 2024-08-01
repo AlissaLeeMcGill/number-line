@@ -170,7 +170,7 @@ export class Numberline {
         let num_label_start = interactive.text(this.line_start_X , this.line_start_Y + 25, this.start_label);
             num_label_start.style.textAnchor = 'middle';
             num_label_start.alignmentBaseline = 'middle';
-            let num_label_end = interactive.text(this.line_start_X +this.line_length, this.line_start_Y + 25, this.end_label);
+         let num_label_end = interactive.text(this.line_start_X +this.line_length, this.line_start_Y + 25, this.end_label);
             num_label_end.style.textAnchor = 'middle';
             num_label_end.alignmentBaseline = 'middle';
     }
@@ -194,12 +194,13 @@ export class Numberline {
         }
         setInteractiveSize(500,1000);
 
-        const numberline = new Numberline(100, 100,30, NumberLabels.START_AND_END, false, 20, 40);
+        const numberline = new Numberline(100, 100,20, NumberLabels.START_AND_END, true, 15, 50);
         numberline.baseline.x2 = numberline.line_start_X + numberline.line_length;
         //numberline.setTargetNumber(33);
         numberline.generateTargetNumber();
         numberline.setTargetNumberLocation(50,50);
         let relativeLocationText = interactive.text(150, 150, 0);
+        
         
         document.getElementById('control-17').addEventListener('mousedown', function(e) {
             numberline.line.stroke = "blue";
@@ -216,9 +217,9 @@ export class Numberline {
             this.y1 = numberline.line_start_Y; 
             this.y2 = numberline.line_start_Y;
 
-            if(this.boundless_line){
-                this.x2 = numberline.control_point.x;    
-            }else{
+            if(numberline.boundless_line){
+                this.x2 = numberline.control_point.x; 
+            }else{       
                 if(numberline.control_point.x < numberline.line_start_X){
                     this.x2 = numberline.line_start_X;
                 }
