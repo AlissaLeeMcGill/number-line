@@ -3,7 +3,7 @@ A plugin for creating bounded and un-bouded number-lines .
 by Alissa
 
 
-Pre-requisite downloads
+Pre-requisite downloads for testing
 1. Download Git - https://git-scm.com/downloads
     This tool allows you to get the latest version of the code from my github
 2. Download Simple Web Server -  https://simplewebserver.org/docs/wsc.html
@@ -11,8 +11,8 @@ Pre-requisite downloads
 
 Quick set-up the guide
 1. Check out the git repository.
-    Open Git in either the terminal on your computer, or use the Git GUI
-    Open the terminal window and navigate to the folder you want to download the code to. You can type the following to check out the code
+    You can use the terminal/command line or use the Git GUI(I don't usually use this, you may need to look it up)
+    For the terminal : Open the terminal window and navigate to the folder you want to download the code to. You can type the following to check out the code
          git clone https://github.com/AlissaLeeMcGill/number-line.git
     then to enter the folder type
         cd number-line 
