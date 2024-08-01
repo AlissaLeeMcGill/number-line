@@ -15,8 +15,7 @@ Quick set-up the guide
 TODO:
 1. Save time from start of trial to final response
 2. Control point stays snapped to the numberline
-3. Support fraction
-4. Support decimals 
-5. Fixation/ Start point appears first 
+3. Support fractions
+4. Fixation/ Start point appears first 
 
 
