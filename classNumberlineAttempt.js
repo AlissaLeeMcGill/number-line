@@ -31,6 +31,12 @@ export class Numberline {
     target_number_x = 0;
     target_number_y = 0;
     numberline_value=0;
+    trial_start_time_ms=0;
+    trial_end_time_ms=0;
+    adjust_start_time_ms =0;
+    adjust_end_time_ms = 0; 
+    trial_time=0;
+
 
     //boolean
     boundless_line = true;
@@ -49,7 +55,7 @@ export class Numberline {
     
 
     //array
-    number_labels_array = [];
+    adjust_times_ms = [];
 
     //control
     control_point = interactive.control(this.line_start_X + this.line_length, this.line_start_Y);
@@ -74,7 +80,27 @@ export class Numberline {
         this.setCssClasses();
         
     }
-
+    startTrialTimer(){
+        this.trial_start_time_ms = Date.now();
+    }
+    stopTrialTimer(){
+        this.trial_end_time_ms = Date.now();
+        this.trial_time = this.trial_end_time_ms - this.trial_start_time_ms;
+    }
+    startAdjustTimer(){
+        this.adjust_start_time_ms = Date.now();
+    }
+    stopAdjustTimer(){
+        this.adjust_end_time_ms = Date.now();
+        let total_time = this.adjust_end_time_ms - this.adjust_start_time_ms; 
+        this.adjust_times_ms.push(total_time);
+    }
+    getTrialTime(){
+        return this.trial_time
+    }
+    getAdjustTimeArray(){
+        return this. adjust_times_ms;
+    }
     generateTargetNumber(){
         this.target_number_value = Math.floor(Math.random() * (this.end_label- this.start_label+1)) + this.start_label;
         this.target_number.contents = this.target_number_value;
@@ -104,7 +130,7 @@ export class Numberline {
 
     setCssClasses(){
         this.line.classList.add('default', 'clickable-line');
-        this.baseline.classList.add('base-line');
+        this.baseline.classList.add('base-line-clicked')
     }
 
     setLabels(start_label, end_label){
@@ -117,7 +143,7 @@ export class Numberline {
             this.setStartAndEndLabels();
         }
     }
-
+    
     setAllLabels() {
         for (let i = 0; i <= (this.end_label-this.start_label); i++){
             let line_marker = interactive.line(this.line_start_X+(i* this.unit_size), this.line_start_Y +(this.tick_mark_height/2),this.line_start_X+(i* this.unit_size), this.line_start_Y-(this.tick_mark_height/2) );
@@ -162,6 +188,13 @@ export class Numberline {
         numberline.generateTargetNumber();
         numberline.setTargetNumberLocation(50,50);
         let relativeLocationText = interactive.text(150, 150, 0);
+
+        function adjusterOnClick()
+        {
+            document.getElementById("base-line-clicked").style.color = "purple";
+    
+        }
+
 
         numberline.line.update = function () {
             this.x1 = numberline.line_start_X;
