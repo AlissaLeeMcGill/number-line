@@ -194,7 +194,7 @@ export class Numberline {
         }
         setInteractiveSize(500,1000);
 
-        const numberline = new Numberline(100, 100,20, NumberLabels.START_AND_END, true, 15, 50);
+        const numberline = new Numberline(100, 100,20, NumberLabels.START_AND_END, false, 15, 50);
         numberline.baseline.x2 = numberline.line_start_X + numberline.line_length;
         //numberline.setTargetNumber(33);
         numberline.generateTargetNumber();
