@@ -6,6 +6,18 @@
 * @tags [svg]
 */
 
+
+// set numbers outside the bound
+// set to 100% of screen size. - default. 
+// jspsych timer
+//stick it to the line 
+// jspsych plugin requirements.
+// change it to red and blue dot trial 
+
+// create IRB for just adults numberline understanding
+
+
+
 import { Interactive, getScriptName } from './index.js';
 let interactive = new Interactive(getScriptName());
 interactive.border = true;
@@ -25,7 +37,7 @@ export class Numberline {
     unit_size = 10; 
     start_label = 5; 
     end_label = 20;
-    line_length = 0;
+    line_length = 0; //calculated 
     tick_mark_height = 20;
     target_number_value = 0;
     target_number_x = 0;
@@ -194,7 +206,7 @@ export class Numberline {
         }
         setInteractiveSize(500,1000);
 
-        const numberline = new Numberline(100, 100,30, NumberLabels.START_AND_END, false, 10.4, 20.3);
+        const numberline = new Numberline(100, 100,40, NumberLabels.START_AND_END, true, 10, 20);
         numberline.baseline.x2 = numberline.line_start_X + numberline.line_length;
         //numberline.setTargetNumber(33);
         numberline.generateTargetNumber();

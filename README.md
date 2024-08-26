@@ -14,9 +14,9 @@ Quick set-up the guide
     You can use the terminal/command line or use the Git GUI(I don't usually use this, you may need to look it up)
     For the terminal : Open the terminal window and navigate to the folder you want to download the code to. You can type the following to check out the code
          git clone https://github.com/AlissaLeeMcGill/number-line.git
-    then to enter the folder type
+    then to enter the folder, type
         cd number-line 
-   to get the updated code type
+   to get the updated code, type
         git pull
         git submodule init
         git sumbodule update
