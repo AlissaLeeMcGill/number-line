@@ -197,7 +197,7 @@ export class Numberline {
         return this.numberline_value;
     }
 
-    main(){
+    main(variable1){
         let text = interactive.text(25, interactive.height - 25, "");
         function setInteractiveSize(height, width)
         {
@@ -206,7 +206,7 @@ export class Numberline {
         }
         setInteractiveSize(500,1000);
 
-        const numberline = new Numberline(100, 100,40, NumberLabels.START_AND_END, true, 10, 20);
+        const numberline = new Numberline(variable1, 100,40, NumberLabels.START_AND_END, true, 10, 20);
         numberline.baseline.x2 = numberline.line_start_X + numberline.line_length;
         //numberline.setTargetNumber(33);
         numberline.generateTargetNumber();

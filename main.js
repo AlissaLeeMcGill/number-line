@@ -1,14 +1,15 @@
 import { download } from './depend/dist/util/file.js';
-import { Numberline } from './classNumberlineAttempt.js';
+import { Numberline } from './classNumberline.js';
 import Circle from './depend/dist/elements/svg/circle.js';
 import Line from './depend/dist/elements/svg/line.js';
 
-window.onload = function() {
+//window.onload = function() {
     let newSvgElement = new Numberline();
-    newSvgElement.main();
-}
+    newSvgElement.main(300);
+//}
 
-// add a save function to the window to save the current interactive
+
+/* // add a save function to the window to save the current interactive
 window.save = function() {
     let interactives = document.getElementsByClassName('interactive');
     for( let i = 0; i < interactives.length; i++ ) {
@@ -21,4 +22,4 @@ window.save = function() {
 window.onbeforeunload = function() {
     //maybe something in here? Might be blocked by most browsers.
     alert('Are you sure you want to leave?');
-}
+} */
